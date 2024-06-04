@@ -67,7 +67,6 @@ public class AutoAppConfig {
         - 한번에 여러 필드를 주입 받을 수 있다.
         - 일반적으로 잘 사용하지 않는다.
 
-
      */
 
 }
