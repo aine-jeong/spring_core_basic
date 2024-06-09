@@ -8,16 +8,15 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor -> lombok 어노테이션을 적용하면 생성자를 자동으로 만들어준다.
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
-
-    /*
 
     //생성자가 딱 하나면 @Autowired 생략 가능!
     @Autowired
@@ -26,8 +25,6 @@ public class OrderServiceImpl implements OrderService{
         this.discountPolicy = discountPolicy;
     }
 
-    lombok 적용 > @RequiredArgsConstructor 추가시 위의 생성자를 자동으로 생성해준다.
-     */
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
