@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class HelloLombok {
     /*
-    section7. 의존관계 자동 주입 - 롬복과 최신 트랜드
+    ### section7. 의존관계 자동 주입 - 롬복과 최신 트랜드
 
      * 설정
       1. build.gradle에 다음 추가
