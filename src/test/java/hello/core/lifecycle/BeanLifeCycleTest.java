@@ -38,10 +38,25 @@ public class BeanLifeCycleTest {
                 따라서 생성자 안에서 무거운 초기화 작업을 함께 하는 것 보다는 객체를 생성하는 부분과 초기화하는 부분을 명확하게 나누는 것이 유지보수 관점에서 좋다.
                 물론 초기화 작업이 내부 값들만 약간 변경하는 정도로 단순한 경우에는 생성자에서 한번에 다 처리하는게 더 나을 수도 있다.
          */
+
+        /*
+        1. implements InitializingBean, DisposableBean
+        2. @Bean(initMethod = "init", destroyMethod = "close")
+            : 설정 정보 사용
+            - 스프링 빈이 스프링 코드에 의존하지 않는다.
+            - 코드가 아니라 설정 정보를 사용하기 때문에 코드를 고칠 수 없는 외부 라이브러리에도 초기화, 종료 메서드를 적용할 수 있다.
+            - destroyMethod 속성은 'close' or 'shutdown' 라는 이름의 메서드를 자동으로 호출해준다. (디폴트가 'inferred')
+            - 만약 추론 기능을 이용하고싶지 않다면 destroyMethod="" 로 지정해주면 된다.
+        3. "추천" @PostConstruct, @PreDestroy
+            - 최신 스프링에서 가장 권장하는 방법
+            - 유일한 단점은 외부 라이브러리에는 적용하지 못한다는 것. 외부 라이브러리를 초기화, 종료해야 한다면 @Bean 의 기능을 이용하자.
+
+         */
     }
 
     @Configuration
     static class LifeCycleConfig {
+//        @Bean(initMethod = "init", destroyMethod = "close")
         @Bean
         public NetworkClient networkClient() {
             NetworkClient networkClient = new NetworkClient();

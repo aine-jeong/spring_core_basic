@@ -1,5 +1,11 @@
 package hello.core.lifecycle;
 
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class NetworkClient {
 
     /*
@@ -11,8 +17,6 @@ public class NetworkClient {
 
     public NetworkClient() {
         System.out.println("생성자 호출, url = " + url);
-        connect();
-        call("초기화 연결 메시지");
     }
 
     public void setUrl(String url) {
@@ -31,5 +35,41 @@ public class NetworkClient {
     //서비스 종료시 호출
     public void disconnect() {
         System.out.println("close: " + url);
+    }
+
+
+    /*
+    //implements InitializingBean, DisposableBean
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        //빈이 생성되고, 빈의 의존관계 주입이 완료된 후 호출
+        System.out.println("NetworkClient.afterPropertiesSet");;
+        connect();
+        call("초기화 연결 메시지");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        //빈이 소멸되기 적전에 호출
+        System.out.println("NetworkClient.destroy");
+        disconnect();
+    }
+
+     => 인터페이스를 이용하는 방식은 현재 잘 사용되지 않음!
+     */
+
+    @PostConstruct
+    public void init() {
+        //빈이 생성되고, 빈의 의존관계 주입이 완료된 후 호출
+        System.out.println("NetworkClient.init");;
+        connect();
+        call("초기화 연결 메시지");
+    }
+
+    @PreDestroy
+    public void close() {
+        //빈이 소멸되기 적전에 호출
+        System.out.println("NetworkClient.close");
+        disconnect();
     }
 }
